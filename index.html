@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMPANA — Panel de Mercados en Vivo</title>
+    <meta name="description" content="Panel de seguimiento de mercados financieros en tiempo real: NASDAQ, S&P500, Cobre, DXY, USD/CLP, USD/MXN y más.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- TICKER TAPE — Scrolling Banner                  -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div id="ticker-tape-container">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+                "symbols": [
+                    { "proName": "NASDAQ:NDX", "title": "NASDAQ 100" },
+                    { "proName": "AMEX:SPY", "title": "S&P 500 ETF" },
+                    { "proName": "COMEX:HG1!", "title": "COBRE" },
+                    { "proName": "TVC:DXY", "title": "DXY" },
+                    { "proName": "FX_IDC:USDCLP", "title": "USD/CLP" },
+                    { "proName": "FX:USDMXN", "title": "USD/MXN" }
+                ],
+                "showSymbolLogo": true,
+                "isTransparent": true,
+                "displayMode": "adaptive",
+                "colorTheme": "dark",
+                "locale": "es"
+            }
+            </script>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- HEADER                                          -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <header id="main-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="14" stroke="url(#grad)" stroke-width="2.5" fill="none"/>
+                        <path d="M10 20 L14 12 L18 16 L22 8" stroke="url(#grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <circle cx="22" cy="8" r="2" fill="#00f0ff"/>
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#00f0ff"/>
+                                <stop offset="100%" stop-color="#7c3aed"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>CAMPANA</h1>
+                    <span class="logo-subtitle">Panel de Mercados</span>
+                </div>
+            </div>
+            <div class="header-meta">
+                <div class="live-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>EN VIVO</span>
+                </div>
+                <div id="clock" class="clock"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- MAIN CONTENT                                    -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <main id="dashboard">
+
+        <!-- SECTION 1: Market Data Table (the watchlist) -->
+        <section class="section" id="section-watchlist">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">📊</span>
+                    Lista de Seguimiento
+                </h2>
+                <span class="section-badge">Tiempo Real</span>
+            </div>
+            <div class="widget-frame widget-frame--table">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>
+                    {
+                        "width": "100%",
+                        "height": "100%",
+                        "symbolsGroups": [
+                            {
+                                "name": "Seguimiento",
+                                "symbols": [
+                                    { "name": "NASDAQ:NDX", "displayName": "NASDAQ 100" },
+                                    { "name": "AMEX:SPY", "displayName": "S&P 500 ETF" },
+                                    { "name": "COMEX:HG1!", "displayName": "COBRE" },
+                                    { "name": "TVC:DXY", "displayName": "DXY" },
+                                    { "name": "FX_IDC:USDCLP", "displayName": "USD/CLP" },
+                                    { "name": "FX:USDMXN", "displayName": "USD/MXN" }
+                                ]
+                            }
+                        ],
+                        "showSymbolLogo": true,
+                        "isTransparent": true,
+                        "colorTheme": "dark",
+                        "locale": "es",
+                        "backgroundColor": "rgba(0,0,0,0)"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Mini Charts Grid -->
+        <section class="section" id="section-charts">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">📈</span>
+                    Mini Gráficos
+                </h2>
+                <span class="section-badge">Intradiario</span>
+            </div>
+            <div class="mini-charts-grid" id="mini-charts-grid">
+                <!-- USD/CLP -->
+                <div class="chart-card" id="chart-usdclp">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "FX_IDC:USDCLP",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": "",
+                            "noTimeScale": false,
+                            "chartOnly": false
+                        }
+                        </script>
+                    </div>
+                </div>
+                <!-- NASDAQ (via QQQ ETF) -->
+                <div class="chart-card" id="chart-nasdaq">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "NASDAQ:QQQ",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                        </script>
+                    </div>
+                </div>
+                <!-- S&P 500 -->
+                <div class="chart-card" id="chart-spy">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "AMEX:SPY",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                        </script>
+                    </div>
+                </div>
+                <!-- COBRE -->
+                <div class="chart-card" id="chart-copper">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "PEPPERSTONE:COPPER",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                        </script>
+                    </div>
+                </div>
+                <!-- DXY -->
+                <div class="chart-card" id="chart-dxy">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "ICEUS:DX1!",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                        </script>
+                    </div>
+                </div>
+                <!-- USD/MXN -->
+                <div class="chart-card" id="chart-usdmxn">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "FX:USDMXN",
+                            "width": "100%",
+                            "height": "100%",
+                            "locale": "es",
+                            "dateRange": "1D",
+                            "colorTheme": "dark",
+                            "isTransparent": true,
+                            "autosize": true,
+                            "largeChartUrl": ""
+                        }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Advanced Chart (focusable) -->
+        <section class="section" id="section-advanced-chart">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">🔍</span>
+                    Gráfico Avanzado
+                </h2>
+                <span class="section-badge">Interactivo</span>
+            </div>
+            <div class="widget-frame widget-frame--chart">
+                <div class="tradingview-widget-container">
+                    <div id="tradingview-advanced-chart"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                    {
+                        "autosize": true,
+                        "symbol": "FX_IDC:USDCLP",
+                        "interval": "15",
+                        "timezone": "America/Santiago",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "es",
+                        "backgroundColor": "rgba(14, 17, 23, 0.9)",
+                        "gridColor": "rgba(42, 46, 57, 0.4)",
+                        "allow_symbol_change": true,
+                        "watchlist": [
+                            "FX_IDC:USDCLP",
+                            "NASDAQ:NDX",
+                            "AMEX:SPY",
+                            "COMEX:HG1!",
+                            "TVC:DXY",
+                            "FX:USDMXN"
+                        ],
+                        "details": true,
+                        "calendar": false,
+                        "support_host": "https://www.tradingview.com"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Economic Calendar -->
+        <section class="section" id="section-calendar">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">📅</span>
+                    Calendario Económico
+                </h2>
+                <span class="section-badge">Próximos Eventos</span>
+            </div>
+            <div class="widget-frame widget-frame--calendar">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    {
+                        "colorTheme": "dark",
+                        "isTransparent": true,
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "es",
+                        "importanceFilter": "0,1",
+                        "countryFilter": "cl,us,cn"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- FOOTER                                          -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <footer id="main-footer">
+        <div class="footer-content">
+            <p>Datos proporcionados por <a href="https://es.tradingview.com" target="_blank" rel="noopener">TradingView</a> · Actualización en tiempo real</p>
+            <p class="footer-disclaimer">Los datos pueden tener un retraso de hasta 15 minutos dependiendo del exchange. Este panel es solo informativo, no constituye asesoría financiera.</p>
+        </div>
+    </footer>
+
+    <!-- Clock Script -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const options = {
+                timeZone: 'America/Santiago',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const dateOptions = {
+                timeZone: 'America/Santiago',
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short'
+            };
+            const time = now.toLocaleTimeString('es-CL', options);
+            const date = now.toLocaleDateString('es-CL', dateOptions);
+            document.getElementById('clock').innerHTML = `<span class="clock-time">${time}</span><span class="clock-date">${date}</span>`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

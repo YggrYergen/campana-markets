@@ -1,0 +1,470 @@
+/* ═══════════════════════════════════════════════════════════
+   CAMPANA — Panel de Mercados · Design System
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Reset & Base ─────────────────────────────────────── */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colors */
+    --bg-primary: #0a0b0f;
+    --bg-secondary: #0e1117;
+    --bg-card: rgba(14, 17, 23, 0.85);
+    --bg-card-hover: rgba(20, 24, 33, 0.95);
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-glow: rgba(0, 240, 255, 0.15);
+    
+    --text-primary: #e8eaed;
+    --text-secondary: #8b8f9a;
+    --text-muted: #555a66;
+    
+    --accent-cyan: #00f0ff;
+    --accent-violet: #7c3aed;
+    --accent-green: #22c55e;
+    --accent-red: #ef4444;
+    --accent-amber: #f59e0b;
+    
+    --gradient-primary: linear-gradient(135deg, #00f0ff 0%, #7c3aed 100%);
+    --gradient-subtle: linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(124,58,237,0.08) 100%);
+    --gradient-glow: radial-gradient(ellipse at 50% 0%, rgba(0,240,255,0.12) 0%, transparent 60%);
+    
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Shadows */
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 40px rgba(0, 240, 255, 0.06);
+    
+    /* Typography */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Background ambient glow */
+body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: var(--gradient-glow);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Ticker Tape Container ────────────────────────────── */
+#ticker-tape-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 11, 15, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-xs) 0;
+}
+
+#ticker-tape-container .tradingview-widget-container {
+    height: 46px;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+#main-header {
+    position: relative;
+    z-index: 10;
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--gradient-subtle);
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.logo-icon svg {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.3));
+}
+
+.logo-text h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+}
+
+.logo-subtitle {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.header-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--accent-green);
+    background: rgba(34, 197, 94, 0.1);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: 100px;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+}
+
+.clock {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.clock-time {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+}
+
+.clock-date {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ── Main Dashboard ───────────────────────────────────── */
+#dashboard {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* ── Sections ─────────────────────────────────────────── */
+.section {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    padding: 0 var(--space-xs);
+}
+
+.section-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.section-icon {
+    font-size: 1.1rem;
+}
+
+.section-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    background: rgba(0, 240, 255, 0.08);
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 240, 255, 0.15);
+}
+
+/* ── Widget Frames ────────────────────────────────────── */
+.widget-frame {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.widget-frame:hover {
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.widget-frame--table {
+    height: 380px;
+}
+
+.widget-frame--table .tradingview-widget-container {
+    height: 100%;
+}
+
+.widget-frame--chart {
+    height: 550px;
+}
+
+.widget-frame--chart .tradingview-widget-container {
+    height: 100%;
+}
+
+.widget-frame--chart .tradingview-widget-container > div:first-child {
+    height: 100% !important;
+}
+
+.widget-frame--calendar {
+    height: 400px;
+}
+
+.widget-frame--calendar .tradingview-widget-container {
+    height: 100%;
+}
+
+/* ── Mini Charts Grid ─────────────────────────────────── */
+.mini-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+.chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 220px;
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+.chart-card .tradingview-widget-container {
+    height: 100%;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+#main-footer {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-xl);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--space-xl);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.footer-content a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.footer-content a:hover {
+    opacity: 0.8;
+}
+
+.footer-disclaimer {
+    margin-top: var(--space-sm);
+    font-size: 0.65rem !important;
+    opacity: 0.6;
+}
+
+/* ── Scrollbar Styling ────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .mini-charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .widget-frame--chart {
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    #dashboard {
+        padding: var(--space-md);
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+    
+    .header-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .mini-charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .widget-frame--table {
+        height: 350px;
+    }
+    
+    .widget-frame--chart {
+        height: 400px;
+    }
+    
+    .widget-frame--calendar {
+        height: 350px;
+    }
+    
+    .logo-text h1 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #main-header {
+        padding: var(--space-md);
+    }
+    
+    #dashboard {
+        padding: var(--space-sm);
+        gap: var(--space-md);
+    }
+    
+    .chart-card {
+        height: 200px;
+    }
+    
+    .section-header {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+}
+
+/* ── Selection Style ──────────────────────────────────── */
+::selection {
+    background: rgba(0, 240, 255, 0.3);
+    color: #fff;
+}
